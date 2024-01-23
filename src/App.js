@@ -3,40 +3,40 @@ import "./App.css";
 
 class App extends Component {
   state = {
-    name: "Darlan",
-    counter: 0,
+    posts: [],
   };
 
-  handleChangeNameEndCounterClick = () => {
-    const { counter, name } = this.state;
+  componentDidMount() {
+    this.loadPosts();
+  }
 
-    name === "Darlan"
-      ? this.setState({ name: "Junior", counter: counter + 1 })
-      : this.setState({ counter: counter + 1 });
+  loadPosts = async () => {
+    const postsResp = fetch("https://jsonplaceholder.typicode.com/posts");
+    const [posts] = await Promise.all([postsResp]);
+    const postsJson = await posts.json();
+
+    this.setState({ posts: postsJson });
   };
 
-  handleRClick = () => {
-    this.setState({ counter: 0, name: "Darlan" });
-  };
+  componentDidUpdate() {}
+  componentWillUnmount() {}
 
   render() {
-    const { name, counter } = this.state;
+    const { posts } = this.state;
 
     return (
-      <div className="App">
-        <p className="nomeVariavel">
-          {name} {counter}
-        </p>
-        <button
-          className="bt-click"
-          onClick={this.handleChangeNameEndCounterClick}
-        >
-          CLICK
-        </button>
-        <button className="bt-reset" onClick={this.handleRClick}>
-          RESET
-        </button>
-      </div>
+      <section className="container">
+        <div className="posts">
+          {posts.map((post) => (
+            <div className="post">
+              <div key={post.id} className="post-content">
+                <h1>{post.title}</h1>
+                <p>{post.body}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
     );
   }
 }
