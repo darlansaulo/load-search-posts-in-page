@@ -1,0 +1,14 @@
+.search {
+  margin-bottom: 1rem;
+  height: 3rem;
+  width: 153px;
+  font-size: 2rem;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  padding: 12px 12px 12px 12px;
+  transition: width 0.4s ease-in-out;
+}
+
+.search:focus {
+    width: 100%;
+}
